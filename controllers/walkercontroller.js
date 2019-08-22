@@ -21,9 +21,54 @@ router.post('/adding-pet', function(req,res){
     var addingPetData = req.body.data
 
     petTable.create({
-        
+
     })
 })
+
+//fetch all pets for owner
+router.get("/displaying-pets", function(req, res) {
+    var userid = req.user.id;
+  
+    petTable.findAll({
+      where: { ownerID: userid },
+      order: [["id", "ASC"]]
+    }).then(
+      function findAllSuccess(data) {
+        res.json(data);
+        console.log(data);
+      },
+      function findAllError(err) {
+        res.send(500, err.message);
+      }
+    );
+  });
+
+
+//Requesting
+//Request Create
+
+router.post('/create-request', function(req,res){
+    var userid = req.user.id
+    var addingRequestData = req.body.data
+
+    serviceRequestTable.create({
+
+    })
+})
+
+
+//request update
+var userid = req.user.id
+var updateRequestData = req.body.data
+
+router.put('/update-request', function(req,res){
+
+
+})
+
+
+
+
 
 
 module.exports = router;
