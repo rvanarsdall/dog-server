@@ -36,11 +36,10 @@ router.post('/create', function (req, res) {
 
 router.get('/:id', function(req, res) {
     var data = req.params.id;
-    var userId = req.user.id;
 
     petTable
     .findAll({
-        where: { id: data, userId: userId }
+        where: { userId: data }
     }).then(
         function findAllSuccess(data) {
             res.json(data);
@@ -57,7 +56,7 @@ router.delete('/delete/:id', function(req, res) {
 
     petTable
     .destroy({
-        where: { id: data, userId: userId }
+        where: { id: data, userId: userId.toString() }
     }).then(
         function deleteLogSuccess(data){
             res.send("you removed a dog");
@@ -70,16 +69,16 @@ router.delete('/delete/:id', function(req, res) {
 
 router.put('/update/:id', function(req, res) {
     var data = req.params.id;
-    var pets = req.body.data.pets;
+    var pets = req.body.data;
 
     petTable
     .update({
-        petName: data.pets,
-        petPic: data.petPic,
-        breed: data.breed,
-        age: data.age,
-        weight: data.weight,
-        gender: data.gender,
+        petName: pets.pets,
+        petPic: pets.petPic,
+        breed: pets.breed,
+        age: pets.age,
+        weight: pets.weight,
+        gender: pets.gender,
     },
     {where: {id: data}}
     ).then(

@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING
       },
       petPic: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING(10000)
       },
       breed: {
         type: DataTypes.STRING
@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING
       },
       gender: {
-        type: DataTypes.BOOLEAN
+        type: DataTypes.STRING
       }
         });
   };

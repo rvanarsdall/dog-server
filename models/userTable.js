@@ -4,6 +4,9 @@ module.exports = function(sequelize, DataTypes) {
       userName:{
         type: DataTypes.STRING
       },
+      password: {
+        type: DataTypes.STRING
+      },
       address: {
         type: DataTypes.STRING
       },
@@ -19,26 +22,11 @@ module.exports = function(sequelize, DataTypes) {
       phoneNumber: {
         type: DataTypes.STRING
       },
-      petName: {
-        type: DataTypes.STRING
-      },
-      breed: {
-        type: DataTypes.STRING
-      },
-      age: {
-        type: DataTypes.STRING
-      },
-      weight: {
-        type: DataTypes.STRING
-      },
-      gender: {
-        type: DataTypes.BOOLEAN
-      },
       bio: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING(10000)
       },
       accountType: {
-        type: DataTypes.BOOLEAN
+        type: DataTypes.STRING
       },
       pic: {
         type: DataTypes.STRING
