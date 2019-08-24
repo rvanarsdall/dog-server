@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING
       },
       zip: {
-        type: DataTypes.NUMBER
+        type: DataTypes.STRING
       },
       phoneNumber: {
         type: DataTypes.STRING
@@ -41,13 +41,13 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.BOOLEAN
       },
       pic: {
-        type: DataTypes.OBJECT
+        type: DataTypes.STRING
       },
       rating: {
-        type: DataTypes.NUMBER
+        type: DataTypes.STRING
       },
       numberOfWalks: {
-        type: DataTypes.NUMBER
+        type: DataTypes.STRING
       }
 
 

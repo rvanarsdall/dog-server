@@ -8,16 +8,16 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING
       },
       petPic: {
-        type: DataTypes.OBJECT
+        type: DataTypes.STRING
       },
       breed: {
         type: DataTypes.STRING
       },
       age: {
-        type: DataTypes.NUMBER
+        type: DataTypes.STRING
       },
       weight: {
-        type: DataTypes.NUMBER
+        type: DataTypes.STRING
       },
       gender: {
         type: DataTypes.BOOLEAN
