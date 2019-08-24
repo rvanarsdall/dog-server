@@ -4,13 +4,23 @@ var petTable = sequelize.import('../models/petTable');
 
 
 router.post('/create', function (req, res) {
-    var owner = req.userTable.id;
-    var pets = req.body.pets.item;
+    var owner = req.user.id;
+    var pets = req.body.data.pets;
+    var image = req.body.data.image;
+    var breed = req.body.data.breed;
+    var age = req.body.data.age;
+    var weight = req.body.data.weight;
+    var gender = req.body.data.gender;
 
     petTable
     .create({
-        pets: pets,
-        owner: owner
+        userId: owner,
+        petName: pets,
+        petPic: image,
+        breed: breed,
+        age: age,
+        weight: weight,
+        gender: gender,
     })
     .then(
         function createSuccess(pets) {
@@ -26,11 +36,11 @@ router.post('/create', function (req, res) {
 
 router.get('/:id', function(req, res) {
     var data = req.params.id;
-    var userid = req.user.id;
+    var userId = req.user.id;
 
     petTable
     .findAll({
-        where: { id: data, owner: userid }
+        where: { id: data, userId: userId }
     }).then(
         function findAllSuccess(data) {
             res.json(data);
@@ -43,14 +53,14 @@ router.get('/:id', function(req, res) {
 
 router.delete('/delete/:id', function(req, res) {
     var data = req.params.id;
-    var userid = req.user.id;
+    var userId = req.user.id;
 
     petTable
     .destroy({
-        where: { id: data, owner: userid }
+        where: { id: data, userId: userId }
     }).then(
         function deleteLogSuccess(data){
-            res.send("you removed a log");
+            res.send("you removed a dog");
         },
         function deleteLogError(err){
             res.send(500, err.message);
@@ -60,17 +70,22 @@ router.delete('/delete/:id', function(req, res) {
 
 router.put('/update/:id', function(req, res) {
     var data = req.params.id;
-    var pets = req.body.pets.item;
+    var pets = req.body.data.pets;
 
     petTable
     .update({
-        pets: pets
+        petName: data.pets,
+        petPic: data.petPic,
+        breed: data.breed,
+        age: data.age,
+        weight: data.weight,
+        gender: data.gender,
     },
     {where: {id: data}}
     ).then(
         function updateSuccess(updatedLog) {
             res.json({
-                pets: pets
+                petName: pets
             });
         },
         function updateError(err){

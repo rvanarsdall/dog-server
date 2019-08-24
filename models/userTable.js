@@ -2,68 +2,52 @@ module.exports = function(sequelize, DataTypes) {
     return sequelize.define("user", {
 
       userName:{
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       address: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       city: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       state: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       zip: {
-        type: DataTypes.NUMBER,
-        allowNull: false
+        type: DataTypes.NUMBER
       },
       phoneNumber: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       petName: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       breed: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       age: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       weight: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       gender: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
+        type: DataTypes.BOOLEAN
       },
       bio: {
-        type: DataTypes.STRING,
-        allowNull: true
+        type: DataTypes.STRING
       },
       accountType: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
+        type: DataTypes.BOOLEAN
       },
       pic: {
-        type: DataTypes.OBJECT,
-        allowNull: true
+        type: DataTypes.OBJECT
       },
       rating: {
-        type: DataTypes.NUMBER,
-        allowNull: true
+        type: DataTypes.NUMBER
       },
       numberOfWalks: {
-        type: DataTypes.NUMBER,
-        allowNull: false
+        type: DataTypes.NUMBER
       }
 
 
