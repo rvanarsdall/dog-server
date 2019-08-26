@@ -26,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING(10000)
       },
       accountType: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING(200000)
       },
       pic: {
         type: DataTypes.STRING

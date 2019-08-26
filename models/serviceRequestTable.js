@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING
       },
       review: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING(20000)
       }
         
     });
