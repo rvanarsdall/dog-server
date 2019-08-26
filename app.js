@@ -3,7 +3,7 @@ require('dotenv').config()
 var express = require('express');
 var app = express();
 var user= require('./controllers/usercontroller')
-// var walkerRequest= require('./controllers/walkercontroller')
+var walkerRequest= require('./controllers/walkercontroller')
 var dogOwner = require('./controllers/ownercontroller')
 
 // var fakeDataCreating = require('./controllers/databasedatacontroller')
@@ -24,7 +24,7 @@ app.use('/user', user )  //Handling User signup/ login
 
 app.use(require('./middleware/validate-session'))
 
-// app.use('/walker', walkerRequest) // used for walker request
+app.use('/walker', walkerRequest) // used for walker request
 
 app.use('/owner',dogOwner) // adding pets based on dog owners
 
