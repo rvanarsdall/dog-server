@@ -2,32 +2,25 @@ module.exports = function(sequelize, DataTypes) {
     return sequelize.define("pets", {
 
       userId: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       petName: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       petPic: {
-        type: DataTypes.OBJECT,
-        allowNull: true
+        type: DataTypes.STRING(10000)
       },
       breed: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       age: {
-        type: DataTypes.NUMBER,
-        allowNull: false
+        type: DataTypes.STRING
       },
       weight: {
-        type: DataTypes.NUMBER,
-        allowNull: false
+        type: DataTypes.STRING
       },
       gender: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
+        type: DataTypes.STRING
       }
         });
   };

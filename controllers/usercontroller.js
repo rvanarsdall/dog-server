@@ -1,4 +1,4 @@
-// require('dotenv').config()
+require('dotenv').config()
 var express = require('express')
 var router = express.Router()
 var sequelize = require('../db');
@@ -11,12 +11,14 @@ router.post('/signup', function (req, res) {
     var lastName = req.body.user.lastName;
     var email = req.body.user.email;
     var pass = req.body.user.password;
+    var accountType = req.body.user.accountType;
 
     Auth.create({
         firstName: firstName,
         lastName: lastName,
-        email: email,
-        passwordhash: bcrypt.hashSync(pass, 10)
+        userName: email,
+        password: bcrypt.hashSync(pass, 10),
+        accountType: accountType
 
     }).then(
         function creatSuccess(user) {
@@ -34,10 +36,10 @@ router.post('/signup', function (req, res) {
 })
 
 router.post('/login', function(req, res) {
-    Auth.findOne( { where: {email: req.body.user.email }}).then(
+    Auth.findOne( { where: {userName: req.body.user.email }}).then(
         function(email) {
             if (email) {
-                bcrypt.compare(req.body.user.password, email.passwordhash, function(err, matches) {
+                bcrypt.compare(req.body.user.password, email.password, function(err, matches) {
                     if (matches) {
                         var token = jwt.sign({id: email.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
                         res.json({

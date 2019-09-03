@@ -2,43 +2,34 @@ module.exports = function(sequelize, DataTypes) {
     return sequelize.define("service-request", {
 
       dateRequested: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       timeRequested: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       walkerId: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       userId: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING
       },
       isAccepted: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
         default: false
       },
       isCompleted: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
         default: false
       },
       ownerNotified: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
         default: false
       },
       reviewTitle: {
-        type: DataTypes.STRING,
-        allowNull: true
+        type: DataTypes.STRING
       },
       review: {
-        type: DataTypes.STRING,
-        allowNull: true
+        type: DataTypes.STRING(20000)
       }
         
     });
