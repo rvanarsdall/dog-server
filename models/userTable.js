@@ -4,6 +4,12 @@ module.exports = function(sequelize, DataTypes) {
       userName:{
         type: DataTypes.STRING
       },
+      firstName:{
+        type: DataTypes.STRING
+      },
+        lastName:{
+          type: DataTypes.STRING
+        },
       password: {
         type: DataTypes.STRING
       },

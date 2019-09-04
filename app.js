@@ -33,4 +33,4 @@ app.use('/owner',dogOwner) // adding pets based on dog owners
  
 app.listen(3000, function(){
   console.log(`App is listening on port 3000`);
-})
+}) 

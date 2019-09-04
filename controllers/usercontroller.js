@@ -35,6 +35,36 @@ router.post('/signup', function (req, res) {
     );
 })
 
+
+router.put('/update/:id', function(req, res) {
+    var user = req.params.id;
+    var ownerData = req.body.data;
+
+    Auth
+    .update({
+      address:ownerData.street,
+      city: ownerData.city,
+      state: ownerData.state,
+      zip: ownerData.zipcode,
+      phoneNumber: ownerData.phoneNumber,
+      bio: ownerData.bio,
+      pic: ownerData.picture,
+      rating: ownerData.rating,
+      numberOfWalks: ownerData.numberOfWalks
+    },
+    {where: {id: user}}
+    ).then(
+        function updateSuccess(updatedLog) {
+            res.json({
+                data: updatedLog
+            });
+        },
+        function updateError(err){
+            res.send(500, err.message);
+        }
+    )
+    });
+
 router.post('/login', function(req, res) {
     Auth.findOne( { where: {userName: req.body.user.email }}).then(
         function(email) {
@@ -60,8 +90,6 @@ router.post('/login', function(req, res) {
             }
     );
 });
-    
-    
 
 
 
