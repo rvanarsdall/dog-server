@@ -21,6 +21,9 @@ module.exports = function(sequelize, DataTypes) {
       },
       gender: {
         type: DataTypes.STRING
+      }, 
+      bio: {
+        type: DataTypes.STRING(2000)
       }
         });
   };

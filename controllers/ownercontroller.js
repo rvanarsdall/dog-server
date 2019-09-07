@@ -4,23 +4,25 @@ var petTable = sequelize.import('../models/petTable');
 
 
 router.post('/create', function (req, res) {
-    var owner = req.user.id;
-    var pets = req.body.data.pets;
+    // var owner = req.user.id;
+    var petName = req.body.data.petName;
     var image = req.body.data.image;
     var breed = req.body.data.breed;
     var age = req.body.data.age;
     var weight = req.body.data.weight;
     var gender = req.body.data.gender;
+    var bio = req.body.data.bio;
 
     petTable
     .create({
-        userId: owner,
-        petName: pets,
+        userId: req.body.data.userId,
+        petName: petName,
         petPic: image,
         breed: breed,
         age: age,
         weight: weight,
         gender: gender,
+        bio: bio
     })
     .then(
         function createSuccess(pets) {
@@ -52,17 +54,19 @@ router.get('/:id', function(req, res) {
 
 router.delete('/delete/:id', function(req, res) {
     var data = req.params.id;
-    var userId = req.user.id;
+    // var userId = req.user.id;
+    var userId = 1
+
 
     petTable
     .destroy({
         where: { id: data, userId: userId.toString() }
     }).then(
         function deleteLogSuccess(data){
-            res.send("you removed a dog");
+            res.status(200).json({message: 'deleted'});
         },
         function deleteLogError(err){
-            res.send(500, err.message);
+            res.status(500).json({message: err.message});
         }
     );
 });
