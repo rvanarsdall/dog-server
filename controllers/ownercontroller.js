@@ -1,16 +1,59 @@
 var router = require('express').Router();
 var sequelize = require('../db');
 var petTable = sequelize.import('../models/petTable');
+var Auth = sequelize.import('../models/userTable');
+
+
+router.put('/address', function(req, res) {
+    var user = req.user.id;
+    var ownerData = req.body.data;
+  
+    Auth
+    .update({
+      address:ownerData.street,
+      city: ownerData.city,
+      state: ownerData.state,
+      zip: ownerData.zipcode,
+      phoneNumber: ownerData.phoneNumber,
+      bio: ownerData.bio,
+      pic: ownerData.picture,
+      rating: ownerData.rating,
+      numberOfWalks: ownerData.numberOfWalks
+    },
+    {where: {id: user}}
+    ).then(
+        function updateSuccess(updatedLog) {
+            res.json({
+                data: updatedLog
+            });
+        },
+        function updateError(err){
+            res.send(500, err.message);
+        }
+    )
+    });
 
 
 router.post('/create', function (req, res) {
-    var owner = req.userTable.id;
-    var pets = req.body.pets.item;
+    var owner = req.user.id;
+    var petName = req.body.data.petName;
+    var image = req.body.data.image;
+    var breed = req.body.data.breed;
+    var age = req.body.data.age;
+    var weight = req.body.data.weight;
+    var gender = req.body.data.gender;
+    var bio = req.body.data.bio;
 
     petTable
     .create({
-        pets: pets,
-        owner: owner
+        userId: owner,
+        petName: petName,
+        petPic: image,
+        breed: breed,
+        age: age,
+        weight: weight,
+        gender: gender,
+        bio: bio
     })
     .then(
         function createSuccess(pets) {
@@ -24,13 +67,12 @@ router.post('/create', function (req, res) {
     );
 });
 
-router.get('/:id', function(req, res) {
-    var data = req.params.id;
-    var userid = req.user.id;
+router.get('/', function(req, res) {
+    var data = req.user.id;
 
     petTable
     .findAll({
-        where: { id: data, owner: userid }
+        where: { userId: data.toString() }
     }).then(
         function findAllSuccess(data) {
             res.json(data);
@@ -43,34 +85,40 @@ router.get('/:id', function(req, res) {
 
 router.delete('/delete/:id', function(req, res) {
     var data = req.params.id;
-    var userid = req.user.id;
+    var userId = req.user.id;
+
 
     petTable
     .destroy({
-        where: { id: data, owner: userid }
+        where: { id: data, userId: userId.toString() }
     }).then(
         function deleteLogSuccess(data){
-            res.send("you removed a log");
+            res.status(200).json({message: 'deleted'});
         },
         function deleteLogError(err){
-            res.send(500, err.message);
+            res.status(500).json({message: err.message});
         }
     );
 });
 
 router.put('/update/:id', function(req, res) {
     var data = req.params.id;
-    var pets = req.body.pets.item;
+    var pets = req.body.data;
 
     petTable
     .update({
-        pets: pets
+        petName: pets.pets,
+        petPic: pets.petPic,
+        breed: pets.breed,
+        age: pets.age,
+        weight: pets.weight,
+        gender: pets.gender,
     },
     {where: {id: data}}
     ).then(
         function updateSuccess(updatedLog) {
             res.json({
-                pets: pets
+                petName: pets
             });
         },
         function updateError(err){

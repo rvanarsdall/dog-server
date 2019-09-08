@@ -1,4 +1,4 @@
-// require('dotenv').config()
+require('dotenv').config()
 var express = require('express')
 var router = express.Router()
 var sequelize = require('../db');
@@ -11,18 +11,21 @@ router.post('/signup', function (req, res) {
     var lastName = req.body.user.lastName;
     var email = req.body.user.email;
     var pass = req.body.user.password;
+    var accountType = req.body.user.accountType;
 
     Auth.create({
         firstName: firstName,
         lastName: lastName,
-        email: email,
-        passwordhash: bcrypt.hashSync(pass, 10)
+        userName: email,
+        password: bcrypt.hashSync(pass, 10),
+        accountType: accountType
 
     }).then(
         function creatSuccess(user) {
             var token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
             res.json({
                 user: user,
+                accountType: user.accountType,
                 message: 'created',
                 sessionToken: token
             });
@@ -33,15 +36,46 @@ router.post('/signup', function (req, res) {
     );
 })
 
+
+// router.put('/update/', function(req, res) {
+//     var user = req.user.id;
+//     var ownerData = req.body.data;
+
+//     Auth
+//     .update({
+//       address:ownerData.street,
+//       city: ownerData.city,
+//       state: ownerData.state,
+//       zip: ownerData.zipcode,
+//       phoneNumber: ownerData.phoneNumber,
+//       bio: ownerData.bio,
+//       pic: ownerData.picture,
+//       rating: ownerData.rating,
+//       numberOfWalks: ownerData.numberOfWalks
+//     },
+//     {where: {id: user}}
+//     ).then(
+//         function updateSuccess(updatedLog) {
+//             res.json({
+//                 data: updatedLog
+//             });
+//         },
+//         function updateError(err){
+//             res.send(500, err.message);
+//         }
+//     )
+//     });
+
 router.post('/login', function(req, res) {
-    Auth.findOne( { where: {email: req.body.user.email }}).then(
+    Auth.findOne( { where: {userName: req.body.user.email }}).then(
         function(email) {
             if (email) {
-                bcrypt.compare(req.body.user.password, email.passwordhash, function(err, matches) {
+                bcrypt.compare(req.body.user.password, email.password, function(err, matches) {
                     if (matches) {
                         var token = jwt.sign({id: email.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
                         res.json({
                             email: email,
+                            accountType: email.accountType,
                             message: "successfully authenticated",
                             sessionToken: token
                         });
@@ -58,8 +92,6 @@ router.post('/login', function(req, res) {
             }
     );
 });
-    
-    
 
 
 
