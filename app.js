@@ -22,7 +22,7 @@ app.use('/user', user )  //Handling User signup/ login
 
 // app.use('/create', fakeDataCreating) //used for creating fake data in database for demo mode
 
-// app.use(require('./middleware/validate-session'))
+app.use(require('./middleware/validate-session'))
 
 app.use('/walker', walkerRequest) // used for walker request
 

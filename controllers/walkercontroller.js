@@ -2,8 +2,37 @@ var express = require('express')
 var router = express.Router()
 var sequelize = require('../db')
 var serviceRequestTable = sequelize.import('../models/serviceRequestTable')
+var Auth = sequelize.import('../models/userTable');
 
 
+router.put('/update', function(req, res) {
+  var user = req.user.id;
+  var ownerData = req.body.data;
+
+  Auth
+  .update({
+    address:ownerData.street,
+    city: ownerData.city,
+    state: ownerData.state,
+    zip: ownerData.zipcode,
+    phoneNumber: ownerData.phoneNumber,
+    bio: ownerData.bio,
+    pic: ownerData.picture,
+    rating: ownerData.rating,
+    numberOfWalks: ownerData.numberOfWalks
+  },
+  {where: {id: user}}
+  ).then(
+      function updateSuccess(updatedLog) {
+          res.json({
+              data: updatedLog
+          });
+      },
+      function updateError(err){
+          res.send(500, err.message);
+      }
+  )
+  });
 //Request Create
 
 router.post('/create-request', function (req, res) {

@@ -1,10 +1,41 @@
 var router = require('express').Router();
 var sequelize = require('../db');
 var petTable = sequelize.import('../models/petTable');
+var Auth = sequelize.import('../models/userTable');
+
+
+router.put('/address', function(req, res) {
+    var user = req.user.id;
+    var ownerData = req.body.data;
+  
+    Auth
+    .update({
+      address:ownerData.street,
+      city: ownerData.city,
+      state: ownerData.state,
+      zip: ownerData.zipcode,
+      phoneNumber: ownerData.phoneNumber,
+      bio: ownerData.bio,
+      pic: ownerData.picture,
+      rating: ownerData.rating,
+      numberOfWalks: ownerData.numberOfWalks
+    },
+    {where: {id: user}}
+    ).then(
+        function updateSuccess(updatedLog) {
+            res.json({
+                data: updatedLog
+            });
+        },
+        function updateError(err){
+            res.send(500, err.message);
+        }
+    )
+    });
 
 
 router.post('/create', function (req, res) {
-    // var owner = req.user.id;
+    var owner = req.user.id;
     var petName = req.body.data.petName;
     var image = req.body.data.image;
     var breed = req.body.data.breed;
@@ -15,7 +46,7 @@ router.post('/create', function (req, res) {
 
     petTable
     .create({
-        userId: req.body.data.userId,
+        userId: owner,
         petName: petName,
         petPic: image,
         breed: breed,
@@ -36,12 +67,12 @@ router.post('/create', function (req, res) {
     );
 });
 
-router.get('/:id', function(req, res) {
-    var data = req.params.id;
+router.get('/', function(req, res) {
+    var data = req.user.id;
 
     petTable
     .findAll({
-        where: { userId: data }
+        where: { userId: data.toString() }
     }).then(
         function findAllSuccess(data) {
             res.json(data);
@@ -54,8 +85,7 @@ router.get('/:id', function(req, res) {
 
 router.delete('/delete/:id', function(req, res) {
     var data = req.params.id;
-    // var userId = req.user.id;
-    var userId = 1
+    var userId = req.user.id;
 
 
     petTable
