@@ -44,12 +44,22 @@ router.post('/create-request', function (req, res) {
     timeRequested: addingRequestData.timeRequested,
     userId: userid
   })
+  .then(
+    function createSuccess(data) {
+        res.json({
+            data: data
+        });
+    },
+    function createError(err) {
+        res.send(500, err.message);
+    }
+);
 })
 
 
 //request update
 
-router.put('/update-request-owner/:id', function (req, res) {
+router.put('/update-request/:id', function (req, res) {
   var userid = req.user.id
   var updateRequestData = req.body.data
   var requestID = req.params.id
@@ -78,37 +88,55 @@ router.put('/update-request-owner/:id', function (req, res) {
 })
 
 
-router.put('/update-request-walker/:id', function (req, res) {
-  var userid = req.user.id
-  var updateRequestData = req.body.data
+//WALKER PENDING REQUESTS
+
+router.get('/pendingRequests/:id', function (req, res) {
   var requestID = req.params.id
 
-  serviceRequestTable.update({
-    dateRequested: updateRequestData.dateRequested,
-    timeRequested: updateRequestData.timeRequested,
-    walkerId: updateRequestData.walkerId,
-    userId: userid,
-    isAccepted: updateRequestData.isAccepted,
-    isCompleted: updateRequestData.isCompleted,
-    ownerNotified: updateRequestData.ownerNotified,
-    reviewTitle: updateRequestData.reviewTitle,
-    review: updateRequestData.review
-
-  }, {
-    where: {
-      id: requestID, walkerId: userid.toString()
-    }
-  }).then(
-    function updateSuccess(updatedService){
-      res.json(updatedService)
+  serviceRequestTable.findAll({
+    where: { walkerId: requestID.toString(), isAccepted:false }
+}).then(
+    function findAllSuccess(data) {
+        res.json(data);
     },
-    (err)=> res.send(500, err.message)
-  )
-})
+    function findAllError(err) {
+        res.send(500, err.message);
+    }
+);
+});
+
+//WALKER REQUESTS ACCEPTED
+router.get('/acceptedRequests/', function (req, res) {
+  var walkerID = req.user.id
+
+  serviceRequestTable.findAll({
+    where: { walkerId: walkerID.toString(), isAccepted:true }
+}).then(
+    function findAllSuccess(data) {
+        res.json(data);
+    },
+    function findAllError(err) {
+        res.send(500, err.message);
+    }
+);
+});
+
+//OWNER REQUEST TABLE
 
 
+router.get('/owner-requests/', function (req, res) {
+  var userID = req.user.id
 
-
-
+  serviceRequestTable.findAll({
+    where: { userId : userID.toString()}
+}).then(
+    function findAllSuccess(data) {
+        res.json(data);
+    },
+    function findAllError(err) {
+        res.send(500, err.message);
+    }
+);
+});
 
 module.exports = router;

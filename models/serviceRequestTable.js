@@ -19,18 +19,20 @@ module.exports = function(sequelize, DataTypes) {
       },
       isCompleted: {
         type: DataTypes.BOOLEAN,
-        default: false
+        defaultValue: false
       },
       ownerNotified: {
         type: DataTypes.BOOLEAN,
-        default: false
+        defaultValue: false
       },
       reviewTitle: {
         type: DataTypes.STRING
       },
       review: {
         type: DataTypes.STRING(20000)
+      },
+      rating: {
+        type: DataTypes.STRING
       }
-        
     });
   };

@@ -5,6 +5,7 @@ var app = express();
 var user= require('./controllers/usercontroller')
 var walkerRequest= require('./controllers/walkercontroller')
 var dogOwner = require('./controllers/ownercontroller')
+var zipcode =require('./controllers/zipcode-controller')
 
 // var fakeDataCreating = require('./controllers/databasedatacontroller')
 
@@ -28,6 +29,7 @@ app.use('/walker', walkerRequest) // used for walker request
 
 app.use('/owner',dogOwner) // adding pets based on dog owners
 
+app.use('/zipcode',zipcode) // adding pets based on dog owners
 
 
  
