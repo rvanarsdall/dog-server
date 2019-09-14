@@ -23,7 +23,7 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING
       },
       zip: {
-        type: DataTypes.NUMBER
+        type: DataTypes.STRING
       },
       phoneNumber: {
         type: DataTypes.STRING
