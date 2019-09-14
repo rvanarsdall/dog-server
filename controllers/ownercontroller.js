@@ -4,6 +4,21 @@ var petTable = sequelize.import('../models/petTable');
 var Auth = sequelize.import('../models/userTable');
 
 
+
+router.get('/userinfo', function(req, res) {
+    Auth.findOne( { where: {id: req.user.id }}).then(
+        function(data) {
+
+            res.json({
+                data: data
+            });
+        },
+            function (err) {
+                res.status(501).send({error: 'Data Error'});
+            }
+    );
+});
+
 router.put('/address', function(req, res) {
     var user = req.user.id;
     var ownerData = req.body.data;
