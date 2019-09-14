@@ -152,9 +152,10 @@ router.get("/owner-requests/", function(req, res) {
 router.get("/test/", function(req, res) {
   // var userID = req.user.id;
 
-  sequelize.query("SELECT * from users").then(([results, metadata]) => {
+  sequelize.query("SELECT * from pets LEFT OUTER JOIN users ON 'pets.userId'='users.id' where 'pets.userId'='5'").then(([results, metadata]) => {
 
     res.json(results)
+    // res.json(metadata)
     // Results will be an empty array and metadata will contain the number of affected rows.
   }, function findAllError(err) {
     res.send(500, err);
