@@ -4,7 +4,7 @@ var sequelize = require("../db");
 var serviceRequestTable = sequelize.import("../models/serviceRequestTable");
 var Auth = sequelize.import("../models/userTable");
 var Sequelize = require("sequelize");
-var reqTable =require('../models/serviceRequestTable')
+var reqTable = require("../models/serviceRequestTable");
 
 router.put("/update", function(req, res) {
   var user = req.user.id;
@@ -95,8 +95,8 @@ router.put("/update-request/:id", function(req, res) {
 
 //WALKER PENDING REQUESTS
 
-router.get("/pendingRequests/:id", function(req, res) {
-  var requestID = req.params.id;
+router.get("/pending-requests/", function(req, res) {
+  var requestID = req.user.id;
 
   serviceRequestTable
     .findAll({
@@ -113,7 +113,7 @@ router.get("/pendingRequests/:id", function(req, res) {
 });
 
 //WALKER REQUESTS ACCEPTED
-router.get("/acceptedRequests/", function(req, res) {
+router.get("/accepted-requests/", function(req, res) {
   var walkerID = req.user.id;
 
   serviceRequestTable
@@ -149,17 +149,38 @@ router.get("/owner-requests/", function(req, res) {
     );
 });
 
+router.get("/basic-info/:id", function(req, res) {
+  var userID = req.params.id;
+
+  Auth.findAll({
+    where: { id: userID }
+  }).then(
+    function findAllSuccess(data) {
+      res.json(data);
+    },
+    function findAllError(err) {
+      res.send(500, err.message);
+    }
+  );
+});
+
 router.get("/test/", function(req, res) {
   // var userID = req.user.id;
 
-  sequelize.query("SELECT * from pets LEFT OUTER JOIN users ON 'pets.userId'='users.id' where 'pets.userId'='5'").then(([results, metadata]) => {
-
-    res.json(results)
-    // res.json(metadata)
-    // Results will be an empty array and metadata will contain the number of affected rows.
-  }, function findAllError(err) {
-    res.send(500, err);
-  })
+  sequelize
+    .query(
+      "SELECT * from pets LEFT OUTER JOIN users ON 'pets.userId'='users.id' where 'pets.userId'='5'"
+    )
+    .then(
+      ([results, metadata]) => {
+        res.json(results);
+        // res.json(metadata)
+        // Results will be an empty array and metadata will contain the number of affected rows.
+      },
+      function findAllError(err) {
+        res.send(500, err);
+      }
+    );
 });
 
 module.exports = router;
