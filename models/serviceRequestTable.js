@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define("service-request", {
+  return sequelize.define("servicerequest", {
     dateRequested: {
       type: DataTypes.STRING
     },
