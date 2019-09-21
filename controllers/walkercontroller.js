@@ -5,11 +5,9 @@ var serviceRequestTable = sequelize.import("../models/serviceRequestTable");
 var Auth = sequelize.import("../models/userTable");
 var Sequelize = require("sequelize");
 var reqTable = require("../models/serviceRequestTable");
-
 router.put("/update", function(req, res) {
   var user = req.user.id;
   var ownerData = req.body.data;
-
   Auth.update(
     {
       address: ownerData.street,
@@ -35,11 +33,9 @@ router.put("/update", function(req, res) {
   );
 });
 //Request Create
-
 router.post("/create-request", function(req, res) {
   var userid = req.user.id;
   var addingRequestData = req.body.data;
-
   serviceRequestTable
     .create({
       dateRequested: addingRequestData.dateRequested,
@@ -59,12 +55,10 @@ router.post("/create-request", function(req, res) {
       }
     );
 });
-
 //DELETING REQUEST
 router.delete("/delete/:id", function(req, res) {
   var data = req.params.id;
   var userid = req.user.id;
-
   serviceRequestTable
     .destroy({
       where: { id: data, userid: userid }
@@ -78,14 +72,11 @@ router.delete("/delete/:id", function(req, res) {
       }
     );
 });
-
 //request update
-
 router.put("/update-request/:id", function(req, res) {
   var userid = req.user.id;
   var updateRequestData = req.body.data;
   var requestID = req.params.id;
-
   serviceRequestTable
     .update(
       {
@@ -112,12 +103,10 @@ router.put("/update-request/:id", function(req, res) {
       err => res.send(500, err)
     );
 });
-
 router.put("/walker-update-request/:id", function(req, res) {
   var walkerid = req.user.id;
   var updateRequestData = req.body.data;
   var requestID = req.params.id;
-
   serviceRequestTable
     .update(
       {
@@ -138,12 +127,9 @@ router.put("/walker-update-request/:id", function(req, res) {
       err => res.send(500, err)
     );
 });
-
 //WALKER PENDING REQUESTS
-
 // router.get("/pending-requests/", function(req, res) {
 //   var requestID = req.user.id;
-
 //   serviceRequestTable
 //     .findAll({
 //       where: { walkerid: requestID, isAccepted: false }
@@ -157,11 +143,9 @@ router.put("/walker-update-request/:id", function(req, res) {
 //       }
 //     );
 // });
-
 // //WALKER REQUESTS ACCEPTED
 // router.get("/accepted-requests/", function(req, res) {
 //   var walkerID = req.user.id;
-
 //   serviceRequestTable
 //     .findAll({
 //       where: { walkerid: walkerID, isAccepted: true }
@@ -175,9 +159,7 @@ router.put("/walker-update-request/:id", function(req, res) {
 //       }
 //     );
 // });
-
 //OWNER REQUEST TABLE
-
 router.get("/owner-requests/", function(req, res) {
   // var userID = req.user.id;
   sequelize
@@ -205,10 +187,8 @@ router.get("/owner-requests/", function(req, res) {
   //     }
   //   );
 });
-
 router.get("/basic-info/:id", function(req, res) {
   var userID = req.params.id;
-
   Auth.findAll({
     where: { id: userID }
   }).then(
@@ -237,7 +217,6 @@ router.get("/pending-requests/", function(req, res) {
       }
     );
 });
-
 ///WALKER ACCEPTED REQUESTS
 router.get("/accepted-requests/", function(req, res) {
   // var userID = req.user.id;
@@ -255,5 +234,4 @@ router.get("/accepted-requests/", function(req, res) {
       }
     );
 });
-
 module.exports = router;
