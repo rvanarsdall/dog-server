@@ -6,21 +6,21 @@ module.exports = function(sequelize, DataTypes) {
     timeRequested: {
       type: DataTypes.STRING
     },
-    walkerId: {
-      type: DataTypes.STRING
+    walkerid: {
+      type: DataTypes.INTEGER
     },
-    userId: {
-      type: DataTypes.STRING
+    userid: {
+      type: DataTypes.INTEGER
     },
-    isAccepted: {
-      type: DataTypes.BOOLEAN,
-      default: false
-    },
-    isCompleted: {
+    isaccepted: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    ownerNotified: {
+    iscompleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    ownernotified: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
