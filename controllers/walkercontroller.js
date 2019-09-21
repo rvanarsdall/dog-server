@@ -112,7 +112,7 @@ router.get("/pending-requests/", function(req, res) {
     );
 });
 
-//WALKER REQUESTS ACCEPTED TABLE
+//WALKER REQUESTS ACCEPTED
 router.get("/accepted-requests/", function(req, res) {
   var walkerID = req.user.id;
 
@@ -166,6 +166,19 @@ router.get("/list-reviews-dashboard/", function(req, res) {
         res.send(500, err.message);
       }
     );
+router.get("/basic-info/:id", function(req, res) {
+  var userID = req.params.id;
+
+  Auth.findAll({
+    where: { id: userID }
+  }).then(
+    function findAllSuccess(data) {
+      res.json(data);
+    },
+    function findAllError(err) {
+      res.send(500, err.message);
+    }
+  );
 });
 
 router.get("/test/", function(req, res) {
