@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 var express = require('express');
 var app = express();
@@ -33,6 +33,6 @@ app.use('/zipcode',zipcode) // adding pets based on dog owners
 
 
  
-app.listen(3000, function(){
-  console.log(`App is listening on port 3000`);
+app.listen(process.env.PORT, function(){
+  console.log(`App is listening on port ${process.env.PORT}`);
 }) 
