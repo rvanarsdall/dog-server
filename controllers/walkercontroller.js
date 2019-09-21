@@ -156,7 +156,7 @@ router.get("/list-reviews-dashboard/", function(req, res) {
 
   serviceRequestTable
     .findAll({
-      where: { userId: userID.toString() }
+      where: { userid: userID() }
     })
     .then(
       function findAllSuccess(data) {
@@ -166,6 +166,8 @@ router.get("/list-reviews-dashboard/", function(req, res) {
         res.send(500, err.message);
       }
     );
+});
+
 router.get("/basic-info/:id", function(req, res) {
   var userID = req.params.id;
 
