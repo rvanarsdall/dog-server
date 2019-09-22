@@ -96,7 +96,8 @@ router.put("/update-request/:id", function(req, res) {
         iscompleted: updateRequestData.isCompleted,
         ownernotified: updateRequestData.ownerNotified,
         reviewTitle: updateRequestData.reviewTitle,
-        review: updateRequestData.review
+        review: updateRequestData.review,
+        rating: updateRequestData.rating
       },
       {
         where: {

@@ -16,6 +16,20 @@ router.get("/userinfo", function(req, res) {
   );
 });
 
+router.get("/petpicture/:id", function(req, res) {
+  petPicID = req.params.id;
+  petTable.findOne({ where: { userId: req.params.id } }).then(
+    function(data) {
+      res.json({
+        data: data
+      });
+    },
+    function(err) {
+      res.status(501).send({ error: "Data Error" });
+    }
+  );
+});
+
 router.put("/address", function(req, res) {
   var user = req.user.id;
   var ownerData = req.body.data;
