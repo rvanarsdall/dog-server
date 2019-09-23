@@ -257,4 +257,23 @@ router.get("/accepted-requests/", function(req, res) {
     );
 });
 
+///WALKER ACCEPTED REQUESTS from REVIEW PAGE
+router.get("/accepted-requests-review/:id", function(req, res) {
+  // var userID = req.user.id;
+  // walkerid=${req.user.id} AND
+  // `SELECT * from users INNER JOIN servicerequests ON servicerequests.userid=users.id INNER JOIN pets ON pets.userid=users.id where walkerid=${req.params.id} AND servicerequests.isaccepted=true ORDER BY servicerequests.id`
+  sequelize
+    .query(
+      `SELECT * from users INNER JOIN servicerequests ON servicerequests.userid=users.id where walkerid=${req.params.id} AND servicerequests.isaccepted=true ORDER BY servicerequests.id`
+    )
+    .then(
+      ([results, metadata]) => {
+        res.json(results);
+      },
+      function findAllError(err) {
+        res.send(500, err);
+      }
+    );
+});
+
 module.exports = router;

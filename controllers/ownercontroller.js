@@ -16,6 +16,19 @@ router.get("/userinfo", function(req, res) {
   );
 });
 
+router.get("/profile-review/:id", function(req, res) {
+  Auth.findOne({ where: { id: req.params.id } }).then(
+    function(data) {
+      res.json({
+        data: data
+      });
+    },
+    function(err) {
+      res.status(501).send({ error: "Data Error" });
+    }
+  );
+});
+
 router.get("/petpicture/:id", function(req, res) {
   petPicID = req.params.id;
   petTable.findOne({ where: { userId: req.params.id } }).then(
